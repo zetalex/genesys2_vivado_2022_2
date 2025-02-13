@@ -18,6 +18,17 @@ module system_wrapper
 
     QSPI_D,
     QSPI_CSN,
+    
+    eth_mdc,
+    eth_mdio,
+    eth_rxd,
+    eth_rxctl,
+    eth_rxck,
+    eth_txd,
+    ETH_TX_EN,
+    eth_txck,
+    ETH_PHYRST_N,
+    
     ddr3_sdram_addr,
     ddr3_sdram_ba,
     ddr3_sdram_cas_n,
@@ -45,6 +56,16 @@ module system_wrapper
 
   inout [3:0]QSPI_D;
   inout QSPI_CSN;
+  
+  output eth_mdc;
+  inout eth_mdio;
+  input [3:0]eth_rxd;
+  input eth_rxctl;
+  input eth_rxck;
+  output [3:0]eth_txd;
+  output ETH_TX_EN;
+  output eth_txck;
+  output [0:0]ETH_PHYRST_N;
   
   output [14:0]ddr3_sdram_addr;
   output [2:0]ddr3_sdram_ba;
@@ -365,7 +386,11 @@ module system_wrapper
         .O(GPIO_0_tri_i_20),
         .T(GPIO_0_tri_t_20));
 
-
+  IOBUF eth_mdio_mdc_mdio_iobuf
+       (.I(eth_mdio_mdc_mdio_o),
+        .IO(eth_mdio),
+        .O(eth_mdio_mdc_mdio_i),
+        .T(eth_mdio_mdc_mdio_t));
      
      
   IOBUF SPI_0_0_io0_iobuf
@@ -429,6 +454,17 @@ module system_wrapper
         .ddr3_sdram_ras_n(ddr3_sdram_ras_n),
         .ddr3_sdram_reset_n(ddr3_sdram_reset_n),
         .ddr3_sdram_we_n(ddr3_sdram_we_n),
+        .eth_mdio_mdc_mdc(eth_mdc),
+        .eth_mdio_mdc_mdio_i(eth_mdio_mdc_mdio_i),
+        .eth_mdio_mdc_mdio_o(eth_mdio_mdc_mdio_o),
+        .eth_mdio_mdc_mdio_t(eth_mdio_mdc_mdio_t),
+        .eth_rgmii_rd(eth_rxd),
+        .eth_rgmii_rx_ctl(eth_rxctl),
+        .eth_rgmii_rxc(eth_rxck),
+        .eth_rgmii_td(eth_txd),
+        .eth_rgmii_tx_ctl(ETH_TX_EN),
+        .eth_rgmii_txc(eth_txck),
+        .phy_reset_out(ETH_PHYRST_N),
         .reset(reset),
         .sys_diff_clock_clk_n(sys_diff_clock_clk_n),
         .sys_diff_clock_clk_p(sys_diff_clock_clk_p),

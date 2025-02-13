@@ -1,7 +1,7 @@
 //Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-//Date        : Wed Feb 12 12:48:21 2025
+//Date        : Thu Feb 13 20:07:14 2025
 //Host        : hyperk2 running 64-bit Ubuntu 22.04.5 LTS
 //Command     : generate_target system_wrapper.bd
 //Design      : system_wrapper
@@ -31,6 +31,15 @@ module system_wrapper
     ddr3_sdram_ras_n,
     ddr3_sdram_reset_n,
     ddr3_sdram_we_n,
+    eth_mdio_mdc_mdc,
+    eth_mdio_mdc_mdio_io,
+    eth_rgmii_rd,
+    eth_rgmii_rx_ctl,
+    eth_rgmii_rxc,
+    eth_rgmii_td,
+    eth_rgmii_tx_ctl,
+    eth_rgmii_txc,
+    phy_reset_out,
     reset,
     sys_diff_clock_clk_n,
     sys_diff_clock_clk_p,
@@ -57,6 +66,15 @@ module system_wrapper
   output ddr3_sdram_ras_n;
   output ddr3_sdram_reset_n;
   output ddr3_sdram_we_n;
+  output eth_mdio_mdc_mdc;
+  inout eth_mdio_mdc_mdio_io;
+  input [3:0]eth_rgmii_rd;
+  input eth_rgmii_rx_ctl;
+  input eth_rgmii_rxc;
+  output [3:0]eth_rgmii_td;
+  output eth_rgmii_tx_ctl;
+  output eth_rgmii_txc;
+  output [0:0]phy_reset_out;
   input reset;
   input sys_diff_clock_clk_n;
   input sys_diff_clock_clk_p;
@@ -226,6 +244,18 @@ module system_wrapper
   wire ddr3_sdram_ras_n;
   wire ddr3_sdram_reset_n;
   wire ddr3_sdram_we_n;
+  wire eth_mdio_mdc_mdc;
+  wire eth_mdio_mdc_mdio_i;
+  wire eth_mdio_mdc_mdio_io;
+  wire eth_mdio_mdc_mdio_o;
+  wire eth_mdio_mdc_mdio_t;
+  wire [3:0]eth_rgmii_rd;
+  wire eth_rgmii_rx_ctl;
+  wire eth_rgmii_rxc;
+  wire [3:0]eth_rgmii_td;
+  wire eth_rgmii_tx_ctl;
+  wire eth_rgmii_txc;
+  wire [0:0]phy_reset_out;
   wire reset;
   wire sys_diff_clock_clk_n;
   wire sys_diff_clock_clk_p;
@@ -417,6 +447,11 @@ module system_wrapper
         .IO(SPI_0_0_ss_io[0]),
         .O(SPI_0_0_ss_i_0),
         .T(SPI_0_0_ss_t));
+  IOBUF eth_mdio_mdc_mdio_iobuf
+       (.I(eth_mdio_mdc_mdio_o),
+        .IO(eth_mdio_mdc_mdio_io),
+        .O(eth_mdio_mdc_mdio_i),
+        .T(eth_mdio_mdc_mdio_t));
   system system_i
        (.GPIO_0_tri_i({GPIO_0_tri_i_31,GPIO_0_tri_i_30,GPIO_0_tri_i_29,GPIO_0_tri_i_28,GPIO_0_tri_i_27,GPIO_0_tri_i_26,GPIO_0_tri_i_25,GPIO_0_tri_i_24,GPIO_0_tri_i_23,GPIO_0_tri_i_22,GPIO_0_tri_i_21,GPIO_0_tri_i_20,GPIO_0_tri_i_19,GPIO_0_tri_i_18,GPIO_0_tri_i_17,GPIO_0_tri_i_16,GPIO_0_tri_i_15,GPIO_0_tri_i_14,GPIO_0_tri_i_13,GPIO_0_tri_i_12,GPIO_0_tri_i_11,GPIO_0_tri_i_10,GPIO_0_tri_i_9,GPIO_0_tri_i_8,GPIO_0_tri_i_7,GPIO_0_tri_i_6,GPIO_0_tri_i_5,GPIO_0_tri_i_4,GPIO_0_tri_i_3,GPIO_0_tri_i_2,GPIO_0_tri_i_1,GPIO_0_tri_i_0}),
         .GPIO_0_tri_o({GPIO_0_tri_o_31,GPIO_0_tri_o_30,GPIO_0_tri_o_29,GPIO_0_tri_o_28,GPIO_0_tri_o_27,GPIO_0_tri_o_26,GPIO_0_tri_o_25,GPIO_0_tri_o_24,GPIO_0_tri_o_23,GPIO_0_tri_o_22,GPIO_0_tri_o_21,GPIO_0_tri_o_20,GPIO_0_tri_o_19,GPIO_0_tri_o_18,GPIO_0_tri_o_17,GPIO_0_tri_o_16,GPIO_0_tri_o_15,GPIO_0_tri_o_14,GPIO_0_tri_o_13,GPIO_0_tri_o_12,GPIO_0_tri_o_11,GPIO_0_tri_o_10,GPIO_0_tri_o_9,GPIO_0_tri_o_8,GPIO_0_tri_o_7,GPIO_0_tri_o_6,GPIO_0_tri_o_5,GPIO_0_tri_o_4,GPIO_0_tri_o_3,GPIO_0_tri_o_2,GPIO_0_tri_o_1,GPIO_0_tri_o_0}),
@@ -451,6 +486,17 @@ module system_wrapper
         .ddr3_sdram_ras_n(ddr3_sdram_ras_n),
         .ddr3_sdram_reset_n(ddr3_sdram_reset_n),
         .ddr3_sdram_we_n(ddr3_sdram_we_n),
+        .eth_mdio_mdc_mdc(eth_mdio_mdc_mdc),
+        .eth_mdio_mdc_mdio_i(eth_mdio_mdc_mdio_i),
+        .eth_mdio_mdc_mdio_o(eth_mdio_mdc_mdio_o),
+        .eth_mdio_mdc_mdio_t(eth_mdio_mdc_mdio_t),
+        .eth_rgmii_rd(eth_rgmii_rd),
+        .eth_rgmii_rx_ctl(eth_rgmii_rx_ctl),
+        .eth_rgmii_rxc(eth_rgmii_rxc),
+        .eth_rgmii_td(eth_rgmii_td),
+        .eth_rgmii_tx_ctl(eth_rgmii_tx_ctl),
+        .eth_rgmii_txc(eth_rgmii_txc),
+        .phy_reset_out(phy_reset_out),
         .reset(reset),
         .sys_diff_clock_clk_n(sys_diff_clock_clk_n),
         .sys_diff_clock_clk_p(sys_diff_clock_clk_p),
